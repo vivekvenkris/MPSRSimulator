@@ -59,7 +59,7 @@ public class MPSRSimulator {
 		tcc.start();
 		tccStatus.start();
 		System.err.println("Main thread suspended....");
-		Thread.currentThread().wait();
+		Thread.currentThread().wait(); 
 
 	}
 }

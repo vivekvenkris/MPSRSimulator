@@ -20,10 +20,10 @@ public class MPSRSimulator {
 				try {
 					System.err.println("Backend listening...");
 					listener = new ServerSocket(38010);
-					System.err.println("Backend connected..");
 					String status = "Idle";
 					while (true) {
 						Socket socket = listener.accept();
+						System.err.println("Backend connected..");
 						try {
 							BufferedReader in =new BufferedReader( new InputStreamReader(socket.getInputStream()));
 							String input = in.readLine();
@@ -74,9 +74,9 @@ public class MPSRSimulator {
 		        try {
 					System.err.println("tcc listening...");
 		        	 listener = new ServerSocket(38012);
-					System.err.println("tcc connected...");
 		            while (true) {
 		                Socket socket = listener.accept();
+		                System.err.println("tcc connected...");
 		                try {
 		                    PrintWriter out =
 		                        new PrintWriter(socket.getOutputStream(), true);
@@ -164,9 +164,9 @@ public class MPSRSimulator {
 		        try {
 					System.err.println("tcc status listening...");
 		        	 listener = new ServerSocket(38013);
-		        	 System.err.println("tcc status connected...");
 		            while (true) {
 		                Socket socket = listener.accept();
+		                System.err.println("tcc status connected...");
 		                try {
 		                    PrintWriter out =
 		                        new PrintWriter(socket.getOutputStream(), true);

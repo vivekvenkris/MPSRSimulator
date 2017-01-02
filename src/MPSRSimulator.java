@@ -14,7 +14,6 @@ public class MPSRSimulator {
 			String backendResponseSuccess = "ok";
 			String backendIdle = "Idle";
 			String backendPrepared = "parsed correctly";
-
 			@Override
 			public void run() {
 				ServerSocket listener = null;
@@ -194,7 +193,9 @@ public class MPSRSimulator {
 		tcc.start();
 		tccStatus.start();
 		System.err.println("Main thread suspended....");
-		Thread.currentThread().wait(); 
+		backend.join();
+		tcc.join();
+		tccStatus.join();
 
 	}
 }

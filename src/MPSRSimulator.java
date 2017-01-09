@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MPSRSimulator {
@@ -37,11 +38,11 @@ public class MPSRSimulator {
 							}
 							if(input.contains("start")) {
 								status = "recording";
-								out.println("<response>"+backendResponseSuccess+"</response>");
+								out.println("<response>"+ new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss.SSS").format(new Date())+"</response>");
 							}
 							if(input.contains("stop")) {
 								status = "Idle";
-								out.println("<response>"+backendResponseSuccess+"</response>");
+								out.println("<reply>"+backendResponseSuccess+"</reply>");
 							}
 							out.flush();
 							System.err.println("response sent..");

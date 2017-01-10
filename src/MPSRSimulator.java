@@ -6,6 +6,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class MPSRSimulator {
 
@@ -19,12 +21,10 @@ public class MPSRSimulator {
 			public void run() {
 				ServerSocket listener = null;
 				try {
-					System.err.println("Backend listening...");
 					listener = new ServerSocket(38010);
 					String status = "Idle";
 					while (true) {
 						Socket socket = listener.accept();
-						System.err.println("Backend connected..");
 						try {
 							BufferedReader in =new BufferedReader( new InputStreamReader(socket.getInputStream()));
 							String input = in.readLine();
@@ -38,14 +38,17 @@ public class MPSRSimulator {
 							}
 							if(input.contains("start")) {
 								status = "recording";
-								out.println("<response>"+ new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss.SSS").format(new Date())+"</response>");
+								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss.SSS");
+								format.setTimeZone(TimeZone.getTimeZone("UTC"));
+								String utc = format.format(new Date());
+								out.println("<response>"+utc +"</response>");
+								System.err.println("started observation at "+ utc);
 							}
 							if(input.contains("stop")) {
 								status = "Idle";
 								out.println("<reply>"+backendResponseSuccess+"</reply>");
 							}
 							out.flush();
-							System.err.println("response sent..");
 						} finally {
 							socket.close();
 						}
@@ -73,11 +76,9 @@ public class MPSRSimulator {
 			public void run() {
 				ServerSocket listener = null;
 		        try {
-					System.err.println("tcc listening...");
 		        	 listener = new ServerSocket(38012);
 		            while (true) {
 		                Socket socket = listener.accept();
-		                System.err.println("tcc connected...");
 		                try {
 		                    PrintWriter out =
 		                        new PrintWriter(socket.getOutputStream(), true);
@@ -164,11 +165,9 @@ public class MPSRSimulator {
 			public void run() {
 				ServerSocket listener = null;
 		        try {
-					System.err.println("tcc status listening...");
 		        	 listener = new ServerSocket(38013);
 		            while (true) {
 		                Socket socket = listener.accept();
-		                System.err.println("tcc status connected...");
 		                try {
 		                    PrintWriter out =
 		                        new PrintWriter(socket.getOutputStream(), true);
